@@ -60,13 +60,18 @@ module LetterAvatar
 
       def generate_fullsize(identity)
         filename = fullsize_path(identity)
+        pointsize = if LetterAvatar.pointsize.respond_to?(:call)
+                      LetterAvatar.pointsize.call(identity.letter.size)
+                    else
+                      LetterAvatar.pointsize
+                    end
 
         LetterAvatar.execute(
           %W(
             convert
             -size #{FULLSIZE}x#{FULLSIZE}
             xc:#{to_rgb(identity.color)}
-            -pointsize #{LetterAvatar.pointsize}
+            -pointsize #{pointsize}
             -font #{FONT_FILENAME}
             -weight #{LetterAvatar.weight}
             -fill '#{LetterAvatar.fill_color}'
