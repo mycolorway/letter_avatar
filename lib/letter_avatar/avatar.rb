@@ -9,8 +9,6 @@ module LetterAvatar
 
     FILL_COLOR = 'rgba(255, 255, 255, 0.65)'.freeze
 
-    FONT_FILENAME = File.join(File.expand_path('../../', File.dirname(__FILE__)), 'Roboto-Medium')
-
     class << self
       class Identity
         attr_accessor :color, :letter
@@ -67,7 +65,7 @@ module LetterAvatar
             -size #{FULLSIZE}x#{FULLSIZE}
             xc:#{to_rgb(identity.color)}
             -pointsize #{LetterAvatar.pointsize}
-            -font #{FONT_FILENAME}
+            -font #{font_filename}
             -weight #{LetterAvatar.weight}
             -fill '#{LetterAvatar.fill_color}'
             -gravity Center
@@ -77,6 +75,13 @@ module LetterAvatar
         )
 
         filename
+      end
+
+      def font_filename
+        font_family = LetterAvatar.font_family
+        font_family = 'Roboto-Medium'\
+          unless ['Roboto-Medium', 'SourceHanSans-Regular'].include?(font_family)
+        File.join(File.expand_path('../../', File.dirname(__FILE__)), font_family)
       end
 
       def darken(color, pct)

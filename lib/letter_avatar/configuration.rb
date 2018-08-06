@@ -55,5 +55,13 @@ module LetterAvatar
     def pointsize=(v)
       @pointsize = v
     end
+
+    def font_family
+      @font_family ||= 'Roboto-Medium'
+    end
+
+    def font_family=(v)
+      @font_family = v
+    end
   end
 end
